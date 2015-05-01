@@ -43,20 +43,19 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
     
     // MARK: - protocol methods
     
-    func openBackingstore() -> Bool {
+    func openRepository() -> Bool {
         return self.changeStateForEvent(kOpenRepositoryEvent)
     }
     
-    func closeBackingstore() -> Bool {
+    func closeRepository() -> Bool {
         return self.changeStateForEvent(kCloseRepositoryEvent)
     }
     
-    
-    func resetBackingstore() -> Bool {
+    func resetRepository() -> Bool {
         return self.changeStateForEvent(kResetRepositoryEvent)
     }
     
-    func deleteBackingstore() -> Bool {
+    func deleteRepository() -> Bool {
         return self.changeStateForEvent(kDeleteRepositoryEvent)
     }
     
@@ -67,6 +66,30 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
     lazy var currentState: String? = {
         return self.stateMachine?.currentStateName()
     }()
+    
+    func insertNewEntityNamed(entityName: String) -> AnyObject?{
+        return (NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: self.managedObjectContext!) as! NSManagedObject)
+    }
+    
+    func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> NSFetchRequest?{
+        return nil
+    }
+    
+    func resultsForRequest(NSFetchRequest, error:NSErrorPointer) -> Array<AnyObject>{
+        return [AnyObject]()
+    }
+    
+    func resultsForRequest(NSFetchRequest) -> Array<AnyObject>{
+        return [AnyObject]()
+    }
+    
+    func deleteManagedObject(NSManagedObject) -> Bool{
+        return false
+    }
+    
+    func save() -> Bool{
+        return false
+    }
     
     // MARK: - core repository delegate
     func backingstoreErrorGenerated(error: NSError) {

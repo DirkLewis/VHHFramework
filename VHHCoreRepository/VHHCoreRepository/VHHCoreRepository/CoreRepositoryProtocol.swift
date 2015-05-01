@@ -13,16 +13,19 @@ protocol CoreRepositoryProtocol{
 
     init(backingstore: BackingstoreProtocol)
 
-    func resetBackingstore() -> Bool
-    func deleteBackingstore() -> Bool
-    func openBackingstore() -> Bool
-    func closeBackingstore() -> Bool
+    func resetRepository() -> Bool
+    func deleteRepository() -> Bool
+    func openRepository() -> Bool
+    func closeRepository() -> Bool
     var delegate:CoreRepositoryDelegate?{get set}
     var currentState: String? {get}
     var repositoryDescription: String{get}
     
-    func insertNewEntityNamed(String) -> NSManagedObject
-    func fetchRequestForEntityNamed(String, batchsize:Int) -> NSFetchRequest
+    func insertNewEntityNamed(entityName: String) -> AnyObject?
+    func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> NSFetchRequest?
     func resultsForRequest(NSFetchRequest, error:NSErrorPointer) -> Array<AnyObject>
     func resultsForRequest(NSFetchRequest) -> Array<AnyObject>
+    func deleteManagedObject(NSManagedObject) -> Bool
+    func save() -> Bool
+    
 }

@@ -22,15 +22,24 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock() {
             // Put the code you want to measure the time of here.
+        }
+    }
+    
+    func testInsertingNewEntityIntoRepository(){
+    
+        let bs = SqliteBackingstore(modelName: "TestModel")
+        let repository = CoreRepository(backingstore: bs)
+        repository.delegate = self
+        XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
+        let entity = repository.insertNewEntityNamed("Person") as! NSManagedObject
+        
+        if (((repository.stateMachine?.isInState(kOpenedRepositoryState)) == true)){
+            let description = repository.repositoryDescription
+            println("\(description)")
         }
     }
     
@@ -78,15 +87,15 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         let bs = SqliteBackingstore(modelName: "TestModel")
         let repository = CoreRepository(backingstore: bs)
         repository.delegate = self
-        let opened = repository.openBackingstore()
-        let deleted = repository.closeBackingstore()
+        let opened = repository.openRepository()
+        let deleted = repository.closeRepository()
         if (((repository.stateMachine?.isInState(kOpenedRepositoryState)) == true)){
             let description = repository.repositoryDescription
             println("\(description)")
         }
 
 
-        XCTAssertTrue(repository.deleteBackingstore(), "Should return true")
+        XCTAssertTrue(repository.deleteRepository(), "Should return true")
     }
     
     func testRepositoryReset(){
@@ -94,13 +103,13 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
 
         let repository = CoreRepository(backingstore: bs)
         repository.delegate = self
-        let opened = repository.openBackingstore()
+        let opened = repository.openRepository()
         if (((repository.stateMachine?.isInState(kOpenedRepositoryState)) == true)){
             let description = repository.repositoryDescription
             println("\(description)")
         }
         
-        XCTAssertTrue(repository.resetBackingstore(), "Should return true")
+        XCTAssertTrue(repository.resetRepository(), "Should return true")
     }
     
     func testRepositoryDeleteNotOpen(){
@@ -112,7 +121,7 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
             println("\(description)")
         }
         
-        XCTAssertTrue(repository.deleteBackingstore(), "Should return true")
+        XCTAssertTrue(repository.deleteRepository(), "Should return true")
     }
     
     // MARK: - delgate methods
