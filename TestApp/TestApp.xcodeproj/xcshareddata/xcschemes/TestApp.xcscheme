@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0620"
+   LastUpgradeVersion = "0630"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DDF53CDC1AC9854900931898"
-               BuildableName = "VHHStateMachine.framework"
-               BlueprintName = "VHHStateMachine"
-               ReferencedContainer = "container:VHHStateMachine/VHHStateMachine/VHHStateMachine.xcodeproj">
+               BlueprintIdentifier = "F384E0C31AF30A95009050FD"
+               BuildableName = "TestApp.app"
+               BlueprintName = "TestApp"
+               ReferencedContainer = "container:TestApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DDF53CE71AC9854900931898"
-               BuildableName = "VHHStateMachineTests.xctest"
-               BlueprintName = "VHHStateMachineTests"
-               ReferencedContainer = "container:VHHStateMachine/VHHStateMachine/VHHStateMachine.xcodeproj">
+               BlueprintIdentifier = "F384E0DA1AF30A95009050FD"
+               BuildableName = "TestAppTests.xctest"
+               BlueprintName = "TestAppTests"
+               ReferencedContainer = "container:TestApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,20 +46,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DDF53CE71AC9854900931898"
-               BuildableName = "VHHStateMachineTests.xctest"
-               BlueprintName = "VHHStateMachineTests"
-               ReferencedContainer = "container:VHHStateMachine/VHHStateMachine/VHHStateMachine.xcodeproj">
+               BlueprintIdentifier = "F384E0DA1AF30A95009050FD"
+               BuildableName = "TestAppTests.xctest"
+               BlueprintName = "TestAppTests"
+               ReferencedContainer = "container:TestApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DDF53CDC1AC9854900931898"
-            BuildableName = "VHHStateMachine.framework"
-            BlueprintName = "VHHStateMachine"
-            ReferencedContainer = "container:VHHStateMachine/VHHStateMachine/VHHStateMachine.xcodeproj">
+            BlueprintIdentifier = "F384E0C31AF30A95009050FD"
+            BuildableName = "TestApp.app"
+            BlueprintName = "TestApp"
+            ReferencedContainer = "container:TestApp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -72,15 +72,16 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DDF53CDC1AC9854900931898"
-            BuildableName = "VHHStateMachine.framework"
-            BlueprintName = "VHHStateMachine"
-            ReferencedContainer = "container:VHHStateMachine/VHHStateMachine/VHHStateMachine.xcodeproj">
+            BlueprintIdentifier = "F384E0C31AF30A95009050FD"
+            BuildableName = "TestApp.app"
+            BlueprintName = "TestApp"
+            ReferencedContainer = "container:TestApp.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -90,15 +91,16 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DDF53CDC1AC9854900931898"
-            BuildableName = "VHHStateMachine.framework"
-            BlueprintName = "VHHStateMachine"
-            ReferencedContainer = "container:VHHStateMachine/VHHStateMachine/VHHStateMachine.xcodeproj">
+            BlueprintIdentifier = "F384E0C31AF30A95009050FD"
+            BuildableName = "TestApp.app"
+            BlueprintName = "TestApp"
+            ReferencedContainer = "container:TestApp.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
