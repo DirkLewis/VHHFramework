@@ -23,7 +23,7 @@ protocol CoreRepositoryProtocol{
     func openRepository() -> Bool
     func closeRepository() -> Bool
     var delegate:CoreRepositoryDelegate?{get set}
-    var currentState: String? {get}
+    func currentState() -> String?
     var repositoryDescription: String{get}
     
     func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> (NSError?, NSFetchRequest?)

@@ -30,6 +30,22 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         }
     }
     
+    func testCurrentState(){
+    
+        let bs = SqliteBackingstore(modelName: "TestModel")
+        let repository = CoreRepository(backingstore: bs)
+        repository.delegate = self
+        
+        XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
+        XCTAssertTrue(repository.stateMachine?.isInState(repository.currentState()!) == true, "wrong state")
+        XCTAssertTrue(repository.closeRepository(), "failed to close repository")
+        XCTAssertTrue(repository.stateMachine?.isInState(repository.currentState()!) == true, "wrong state")
+        XCTAssertTrue(repository.deleteRepository(), "failed to delete repository")
+        XCTAssertTrue(repository.stateMachine?.isInState(repository.currentState()!) == true, "wrong state")
+        XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
+        XCTAssertTrue(repository.stateMachine?.isInState(repository.currentState()!) == true, "wrong state")
+    }
+    
     func testStateMachine(){
     
         let bs = SqliteBackingstore(modelName: "TestModel")

@@ -67,9 +67,12 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         return self.backingstore!.backingstoreDescription
         }()
     
-    lazy var currentState: String? = {
+//    lazy var currentState: String? = {
+//        return self.stateMachine?.currentStateName()
+//    }()
+    func currentState() -> String? {
         return self.stateMachine?.currentStateName()
-    }()
+    }
     
     func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> (NSError?, NSFetchRequest?){
         var fetchrequest: NSFetchRequest? = nil
