@@ -33,6 +33,14 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
     
     // MARK: - helper methods
     
+    func childManagedObjectContext() -> NSManagedObjectContext {
+        
+        let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        privateContext.parentContext = self.managedObjectContext
+        
+        return privateContext
+    }
+    
     func changeStateForEvent(eventName: String) -> Bool{
     
         var error: NSError?
@@ -67,9 +75,6 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         return self.backingstore!.backingstoreDescription
         }()
     
-//    lazy var currentState: String? = {
-//        return self.stateMachine?.currentStateName()
-//    }()
     func currentState() -> String? {
         return self.stateMachine?.currentStateName()
     }
@@ -97,9 +102,10 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         return self.fetchRequestForEntityNamed(entityName, batchsize: defaultBatchSize)
     }
     
-    func resultsForRequest(request:NSFetchRequest, error:NSErrorPointer) -> Array<AnyObject>{
+    func resultsForRequest(context: NSManagedObjectContext,request:NSFetchRequest, error:NSErrorPointer) -> Array<AnyObject>{
+    
         if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
-            if let results = self.managedObjectContext?.executeFetchRequest(request, error: error){
+            if let results = context.executeFetchRequest(request, error: error){
                 return results
             }
         }
@@ -107,16 +113,37 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         return [AnyObject]()
     }
     
+    func resultsForRequest(request:NSFetchRequest, error:NSErrorPointer) -> Array<AnyObject>{
+        return self.resultsForRequest(self.managedObjectContext!, request: request, error: nil)
+    }
+    
     func resultsForRequest(request:NSFetchRequest) -> Array<AnyObject>{
         return self.resultsForRequest(request, error: nil)
     }
     
-    func deleteManagedObject(managedObject:NSManagedObject) -> Bool{
-        return false
+    func deleteManagedObject(context: NSManagedObjectContext, managedObject: NSManagedObject) {
+        context.deleteObject(managedObject)
+
+    }
+    
+    func deleteManagedObject(managedObject:NSManagedObject){
+        self.deleteManagedObject(self.managedObjectContext!, managedObject: managedObject)
+    }
+    
+    func save(context: NSManagedObjectContext) -> Bool {
+        var error: NSError? = nil
+        var saved: Bool = context.save(&error)
+            
+        if error != nil{
+            self.delegate?.repositoryErrorGenerated(error!)
+        }
+        
+        return saved
+        
     }
     
     func save() -> Bool{
-        return false
+        return self.save(self.managedObjectContext!)
     }
     
     // MARK: - core repository delegate

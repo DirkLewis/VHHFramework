@@ -106,7 +106,7 @@ class SqliteBackingstore: BackingstoreProtocol {
         if let coordinator = self.managedObjectContext {
             return
         }
-        var managedObjectContext = NSManagedObjectContext()
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator()
         self.managedObjectContext = managedObjectContext
     }

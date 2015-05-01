@@ -30,6 +30,39 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         }
     }
     
+    func testFetchRequestFetchEntitiesThreaded(){
+        
+        let bs = SqliteBackingstore(modelName: "TestModel")
+        let repository = CoreRepository(backingstore: bs)
+        repository.delegate = self
+        XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
+        
+        if (((repository.stateMachine?.isInState(kOpenedRepositoryState)) == true)){
+            let description = repository.repositoryDescription
+            println("\(description)")
+        }
+        
+        var person = Person.insertInManagedObjectContext(repository.childManagedObjectContext())
+        
+        person.fName = "dirk"
+        person.lName = "Lewis"
+        person.age = 50
+        
+        person = Person.insertInManagedObjectContext(repository.childManagedObjectContext())
+        
+        person.fName = "donna"
+        person.lName = "Lewis"
+        person.age = 50
+        
+        repository.childManagedObjectContext().save(nil)
+        
+        let result = repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25)
+        let entities = repository.resultsForRequest(result.1!)
+        println("person count: \(entities.count)")
+        repository.closeRepository()
+        repository.deleteRepository()
+    }
+    
     func testCurrentState(){
     
         let bs = SqliteBackingstore(modelName: "TestModel")
