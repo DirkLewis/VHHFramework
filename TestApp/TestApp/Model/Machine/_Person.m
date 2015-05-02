@@ -9,6 +9,10 @@ const struct PersonAttributes PersonAttributes = {
 	.lName = @"lName",
 };
 
+const struct PersonRelationships PersonRelationships = {
+	.person_address = @"person_address",
+};
+
 @implementation PersonID
 @end
 
@@ -67,6 +71,17 @@ const struct PersonAttributes PersonAttributes = {
 @dynamic fName;
 
 @dynamic lName;
+
+@dynamic person_address;
+
+- (NSMutableSet*)person_addressSet {
+	[self willAccessValueForKey:@"person_address"];
+
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"person_address"];
+
+	[self didAccessValueForKey:@"person_address"];
+	return result;
+}
 
 @end
 

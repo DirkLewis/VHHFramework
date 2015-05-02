@@ -46,6 +46,12 @@
 		F384E11E1AF30C68009050FD /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E1021AF30C68009050FD /* StateMachine.swift */; };
 		F384E1211AF30CDB009050FD /* VHHCoreRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E11F1AF30CDB009050FD /* VHHCoreRepositoryTests.swift */; };
 		F384E1221AF30CDB009050FD /* VHHStateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E1201AF30CDB009050FD /* VHHStateMachineTests.swift */; };
+		F3CE44841AF50DE8007AF967 /* _Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CE44831AF50DE8007AF967 /* _Address.m */; };
+		F3CE44851AF50DE8007AF967 /* _Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CE44831AF50DE8007AF967 /* _Address.m */; };
+		F3CE44881AF50DFD007AF967 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CE44871AF50DFD007AF967 /* Address.m */; };
+		F3CE44891AF50DFD007AF967 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CE44871AF50DFD007AF967 /* Address.m */; };
+		F3CE448B1AF511EC007AF967 /* SwiftPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE448A1AF511EC007AF967 /* SwiftPerson.swift */; };
+		F3CE448C1AF511EC007AF967 /* SwiftPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE448A1AF511EC007AF967 /* SwiftPerson.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +97,11 @@
 		F384E11F1AF30CDB009050FD /* VHHCoreRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VHHCoreRepositoryTests.swift; sourceTree = "<group>"; };
 		F384E1201AF30CDB009050FD /* VHHStateMachineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VHHStateMachineTests.swift; sourceTree = "<group>"; };
 		F384E1301AF30E76009050FD /* -Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "-Bridging-Header.h"; sourceTree = "<group>"; };
+		F3CE44821AF50DE8007AF967 /* _Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Address.h; sourceTree = "<group>"; };
+		F3CE44831AF50DE8007AF967 /* _Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Address.m; sourceTree = "<group>"; };
+		F3CE44861AF50DFD007AF967 /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
+		F3CE44871AF50DFD007AF967 /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
+		F3CE448A1AF511EC007AF967 /* SwiftPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPerson.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,8 +262,11 @@
 		F384E1231AF30DE0009050FD /* Human */ = {
 			isa = PBXGroup;
 			children = (
+				F3CE44861AF50DFD007AF967 /* Address.h */,
+				F3CE44871AF50DFD007AF967 /* Address.m */,
 				43A417C51AF50952003698E2 /* Person.h */,
 				43A417C61AF50952003698E2 /* Person.m */,
+				F3CE448A1AF511EC007AF967 /* SwiftPerson.swift */,
 			);
 			path = Human;
 			sourceTree = "<group>";
@@ -260,6 +274,8 @@
 		F384E1261AF30DE0009050FD /* Machine */ = {
 			isa = PBXGroup;
 			children = (
+				F3CE44821AF50DE8007AF967 /* _Address.h */,
+				F3CE44831AF50DE8007AF967 /* _Address.m */,
 				43A417BA1AF4FFE3003698E2 /* _Person.h */,
 				43A417BB1AF4FFE3003698E2 /* _Person.m */,
 			);
@@ -394,6 +410,7 @@
 			files = (
 				F384E10F1AF30C68009050FD /* CoreRepositoryDelegate.swift in Sources */,
 				F384E0CE1AF30A95009050FD /* DetailViewController.swift in Sources */,
+				F3CE448B1AF511EC007AF967 /* SwiftPerson.swift in Sources */,
 				F384E1151AF30C68009050FD /* CoreRepositoryProtocol.swift in Sources */,
 				F384E11D1AF30C68009050FD /* StateMachine.swift in Sources */,
 				F384E0CC1AF30A95009050FD /* MasterViewController.swift in Sources */,
@@ -407,8 +424,10 @@
 				F384E1171AF30C68009050FD /* SMEvent.swift in Sources */,
 				43A417BC1AF4FFE3003698E2 /* _Person.m in Sources */,
 				F384E1051AF30C68009050FD /* TestModel.xcdatamodeld in Sources */,
+				F3CE44841AF50DE8007AF967 /* _Address.m in Sources */,
 				F384E1191AF30C68009050FD /* SMState.swift in Sources */,
 				F384E1091AF30C68009050FD /* CoreRepositoryFactory.swift in Sources */,
+				F3CE44881AF50DFD007AF967 /* Address.m in Sources */,
 				F384E10B1AF30C68009050FD /* SqliteBackingstore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +438,7 @@
 			files = (
 				F384E1081AF30C68009050FD /* CoreRepository.swift in Sources */,
 				F384E0E21AF30A95009050FD /* TestAppTests.swift in Sources */,
+				F3CE448C1AF511EC007AF967 /* SwiftPerson.swift in Sources */,
 				F384E1161AF30C68009050FD /* CoreRepositoryProtocol.swift in Sources */,
 				F384E1211AF30CDB009050FD /* VHHCoreRepositoryTests.swift in Sources */,
 				F384E1221AF30CDB009050FD /* VHHStateMachineTests.swift in Sources */,
@@ -432,8 +452,10 @@
 				F384E1061AF30C68009050FD /* TestModel.xcdatamodeld in Sources */,
 				43A417BD1AF4FFE3003698E2 /* _Person.m in Sources */,
 				F384E10C1AF30C68009050FD /* SqliteBackingstore.swift in Sources */,
+				F3CE44851AF50DE8007AF967 /* _Address.m in Sources */,
 				F384E1181AF30C68009050FD /* SMEvent.swift in Sources */,
 				F384E1101AF30C68009050FD /* CoreRepositoryDelegate.swift in Sources */,
+				F3CE44891AF50DFD007AF967 /* Address.m in Sources */,
 				F384E10A1AF30C68009050FD /* CoreRepositoryFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -508,6 +530,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "TestApp/-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -546,6 +569,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "TestApp/-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

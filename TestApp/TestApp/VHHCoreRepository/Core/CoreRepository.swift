@@ -102,7 +102,7 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         return self.fetchRequestForEntityNamed(entityName, batchsize: defaultBatchSize)
     }
     
-    func resultsForRequest(request:NSFetchRequest) -> Array<AnyObject>{
+    func resultsForRequest(request:NSFetchRequest) -> [AnyObject]{
         var error: NSError? = nil
         var results = [AnyObject]()
         

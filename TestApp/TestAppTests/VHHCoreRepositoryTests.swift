@@ -30,6 +30,34 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         }
     }
     
+    func testPersonAddress(){
+    
+        let bs = SqliteBackingstore(modelName: "TestModel")
+        let repository = CoreRepository(backingstore: bs)
+        repository.delegate = self
+        XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
+        
+        if (((repository.stateMachine?.isInState(kOpenedRepositoryState)) == true)){
+            let description = repository.repositoryDescription
+            println("\(description)")
+        }
+        
+        let person = Person.insertInManagedObjectContext(repository.managedObjectContext)
+        person.fName = "dirk"
+        person.lName = "lewis"
+        person.age = 50
+        
+        let address = Address.insertInManagedObjectContext(repository.managedObjectContext)
+        address.street = "101 first"
+        address.city = "Home Town"
+        address.address_person = person
+
+        repository.managedObjectContext?.save(nil)
+        
+        repository.closeRepository()
+        repository.deleteRepository()
+    }
+    
     func testFetchRequestFetchEntitiesThreaded(){
         
         let bs = SqliteBackingstore(modelName: "TestModel")
@@ -67,9 +95,7 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         println("person count: \(entities.count)")
         XCTAssertTrue(entities.count == 2, "wrong number of persons")
         if let filtered:AnyObject = (entities.filter(){ $0.fName == "donna"}.first){
-            //let test = filtered as! Person
             XCTAssertTrue(filtered.age == 50, "failed update")
-        
             println("\(filtered.personDescription())")
         }
         repository.closeRepository()

@@ -9,6 +9,12 @@ extern const struct PersonAttributes {
 	__unsafe_unretained NSString *lName;
 } PersonAttributes;
 
+extern const struct PersonRelationships {
+	__unsafe_unretained NSString *person_address;
+} PersonRelationships;
+
+@class Address;
+
 @interface PersonID : NSManagedObjectID {}
 @end
 
@@ -34,6 +40,18 @@ extern const struct PersonAttributes {
 
 //- (BOOL)validateLName:(id*)value_ error:(NSError**)error_;
 
+@property (nonatomic, strong) NSSet *person_address;
+
+- (NSMutableSet*)person_addressSet;
+
+@end
+
+@interface _Person (Person_addressCoreDataGeneratedAccessors)
+- (void)addPerson_address:(NSSet*)value_;
+- (void)removePerson_address:(NSSet*)value_;
+- (void)addPerson_addressObject:(Address*)value_;
+- (void)removePerson_addressObject:(Address*)value_;
+
 @end
 
 @interface _Person (CoreDataGeneratedPrimitiveAccessors)
@@ -49,5 +67,8 @@ extern const struct PersonAttributes {
 
 - (NSString*)primitiveLName;
 - (void)setPrimitiveLName:(NSString*)value;
+
+- (NSMutableSet*)primitivePerson_address;
+- (void)setPrimitivePerson_address:(NSMutableSet*)value;
 
 @end

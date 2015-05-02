@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14E11f" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Address" representedClassName="Address" syncable="YES">
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="address_person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="person_address" inverseEntity="Person" syncable="YES"/>
+    </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="fName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="person_address" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Address" inverseName="address_person" inverseEntity="Address" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Person" positionX="-54" positionY="-9" width="128" height="90"/>
+        <element name="Person" positionX="-54" positionY="-9" width="128" height="103"/>
+        <element name="Address" positionX="223" positionY="-27" width="128" height="118"/>
     </elements>
 </model>

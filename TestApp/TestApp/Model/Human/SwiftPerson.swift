@@ -1,5 +1,5 @@
 //
-//  Person.swift
+//  SwiftPerson.swift
 //  TestApp
 //
 //  Created by Dirk Lewis on 5/2/15.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-@objc(Person)
-class Person:_Person {
+class SwiftPerson:_Person {
     
     func personDescription()->String{
         return "\(self.fName) \(self.lName), \(self.age)"
     }
+    
 }

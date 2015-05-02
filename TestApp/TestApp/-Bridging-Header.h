@@ -11,4 +11,6 @@
 
 #import "Person.h"
 #import "_Person.h"
+#import "Address.h"
+#import "_Address.h"
 #endif
