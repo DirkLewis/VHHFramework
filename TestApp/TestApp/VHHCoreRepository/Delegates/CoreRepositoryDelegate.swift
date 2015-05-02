@@ -12,6 +12,8 @@ import CoreData
 
     func repositoryErrorGenerated(error:NSError)
     func repositoryOpened(context: NSManagedObjectContext?)
+    optional func repositoryFetchResults(results:[AnyObject])
+    optional func repositorySaveResults(results:Bool)
     optional func repositoryClosed()
     optional func repositoryReset()
     optional func repositoryDeleted()

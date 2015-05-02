@@ -28,7 +28,7 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         self.stateMachine = CoreRepositoryFactory.createRepositoryStatemachine()
         self.stateMachine?.startMachine()
     }
-
+    
     // MARK: - core data helper methods
     
     // MARK: - helper methods
@@ -42,7 +42,7 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
     }
     
     func changeStateForEvent(eventName: String) -> Bool{
-    
+        
         var error: NSError?
         if let success = self.stateMachine?.changeStateForEvent(eventName, userInfo: ["repository":self], error: &error){
             if error != nil{
@@ -89,7 +89,7 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
             if let request = fetchrequest{
                 return (nil,fetchrequest)
             }
-            else{                
+            else{
                 return (NSError(domain: repositoryErrorDomain, code: repositoryFailCode, userInfo: ["message":"FetchRequest failed initialization."]), fetchrequest)
             }
         }
@@ -102,48 +102,68 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         return self.fetchRequestForEntityNamed(entityName, batchsize: defaultBatchSize)
     }
     
-    func resultsForRequest(context: NSManagedObjectContext,request:NSFetchRequest, error:NSErrorPointer) -> Array<AnyObject>{
-    
+    func resultsForRequest(request:NSFetchRequest) -> Array<AnyObject>{
+        var error: NSError? = nil
+        var results = [AnyObject]()
+        
         if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
-            if let results = context.executeFetchRequest(request, error: error){
-                return results
-            }
+            self.managedObjectContext!.performBlockAndWait({ () -> Void in
+                results = self.managedObjectContext!.executeFetchRequest(request, error: &error)!
+                if let currenterror = error{
+                    self.delegate!.repositoryErrorGenerated(currenterror)
+                }
+            })
         }
         
-        return [AnyObject]()
+        return results
     }
     
-    func resultsForRequest(request:NSFetchRequest, error:NSErrorPointer) -> Array<AnyObject>{
-        return self.resultsForRequest(self.managedObjectContext!, request: request, error: nil)
-    }
-    
-    func resultsForRequest(request:NSFetchRequest) -> Array<AnyObject>{
-        return self.resultsForRequest(request, error: nil)
-    }
-    
-    func deleteManagedObject(context: NSManagedObjectContext, managedObject: NSManagedObject) {
-        context.deleteObject(managedObject)
-
+    func resultsForRequestAsync(request:NSFetchRequest){
+        var error: NSError? = nil
+        if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
+            self.managedObjectContext!.performBlock({ () -> Void in
+                if let results = self.managedObjectContext!.executeFetchRequest(request, error: &error){
+                    if let currenterror = error{
+                        self.delegate!.repositoryErrorGenerated(currenterror)
+                    }
+                    self.delegate?.repositoryFetchResults?(results)
+                }
+                
+            })
+        }
     }
     
     func deleteManagedObject(managedObject:NSManagedObject){
-        self.deleteManagedObject(self.managedObjectContext!, managedObject: managedObject)
+        self.managedObjectContext!.performBlock { () -> Void in
+            self.deleteManagedObject(managedObject)
+        }
     }
     
-    func save(context: NSManagedObjectContext) -> Bool {
-        var error: NSError? = nil
-        var saved: Bool = context.save(&error)
-            
-        if error != nil{
-            self.delegate?.repositoryErrorGenerated(error!)
+    func saveAsync() {
+        if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
+            self.managedObjectContext!.performBlock{ () -> Void in
+                var error: NSError? = nil
+                let result = self.managedObjectContext!.save(&error)
+                if error != nil{
+                    self.delegate?.repositoryErrorGenerated(error!)
+                }
+                self.delegate?.repositorySaveResults?(result)
+            }
         }
-        
-        return saved
-        
     }
     
     func save() -> Bool{
-        return self.save(self.managedObjectContext!)
+        var saved: Bool = false
+        if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
+            self.managedObjectContext!.performBlockAndWait{ () -> Void in
+                var error: NSError? = nil
+                var saved: Bool = self.managedObjectContext!.save(&error)
+                if error != nil{
+                    self.delegate?.repositoryErrorGenerated(error!)
+                }
+            }
+        }
+        return saved
     }
     
     // MARK: - core repository delegate

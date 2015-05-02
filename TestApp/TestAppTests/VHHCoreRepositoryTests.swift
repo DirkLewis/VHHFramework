@@ -42,23 +42,36 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
             println("\(description)")
         }
         
-        var person = Person.insertInManagedObjectContext(repository.childManagedObjectContext())
+        let expectation = self.expectationWithDescription("context threading")
+        var person: Person? = nil
+        repository.managedObjectContext!.performBlock { () -> Void in
+            person = Person.insertInManagedObjectContext(repository.managedObjectContext)
+            
+            person!.fName = "dirk"
+            person!.lName = "Lewis"
+            person!.age = 50
+            person = Person.insertInManagedObjectContext(repository.managedObjectContext)
+            person!.fName = "donna"
+            person!.lName = "Lewis"
+            person!.age = 50
+            repository.managedObjectContext!.save(nil)
+            expectation.fulfill()
+        }
         
-        person.fName = "dirk"
-        person.lName = "Lewis"
-        person.age = 50
-        
-        person = Person.insertInManagedObjectContext(repository.childManagedObjectContext())
-        
-        person.fName = "donna"
-        person.lName = "Lewis"
-        person.age = 50
-        
-        repository.childManagedObjectContext().save(nil)
-        
+        self.waitForExpectationsWithTimeout(5.0, handler: nil)
+        person!.age = 60
+        //repository.managedObjectContext?.save(nil)
+        repository.managedObjectContext!.reset()
         let result = repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25)
         let entities = repository.resultsForRequest(result.1!)
         println("person count: \(entities.count)")
+        XCTAssertTrue(entities.count == 2, "wrong number of persons")
+        if let filtered:AnyObject = (entities.filter(){ $0.fName == "donna"}.first){
+            //let test = filtered as! Person
+            XCTAssertTrue(filtered.age == 50, "failed update")
+        
+            println("\(filtered.personDescription())")
+        }
         repository.closeRepository()
         repository.deleteRepository()
     }
@@ -184,9 +197,9 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         let bs = SqliteBackingstore(modelName: "TestModel", fileName: "MyFile")
         let description = bs.backingstoreDescription
         XCTAssertFalse(description.isEmpty, "should have a data")
-
         println("\(description)")
-        
+        bs.resetPersistentStoreCoordiator(true)
+
     }
     
     func testBackingstoreConfigNameInitialization(){
@@ -194,9 +207,9 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         let bs = SqliteBackingstore(modelName: "TestModel", fileName: "MyFile", configurationName:"System")
         let description = bs.backingstoreDescription
         XCTAssertFalse(description.isEmpty, "should have a data")
-
         println("\(description)")
-        
+        bs.resetPersistentStoreCoordiator(true)
+
     }
     
     func testBackingstoreCreateManageObjectContext(){
@@ -204,9 +217,10 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         let bs = SqliteBackingstore(modelName: "TestModel")
         let moc = bs.managedObjectContext
         let description = bs.backingstoreDescription
-
         XCTAssertFalse(description.isEmpty, "should have a data")
         println("\(description)")
+        bs.resetPersistentStoreCoordiator(true)
+
     }
     
     func testRepositoryDelete(){
@@ -219,8 +233,6 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
             let description = repository.repositoryDescription
             println("\(description)")
         }
-
-
         XCTAssertTrue(repository.deleteRepository(), "Should return true")
     }
     
@@ -251,7 +263,12 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
     }
     
     // MARK: - delgate methods
-    
+    func repositorySaveResults(results: Bool) {
+        println("Save was: \(results)")
+    }
+    func repositoryFetchResults(results: [AnyObject]) {
+        println("\(results)")
+    }
     func repositoryErrorGenerated(error: NSError) {
         println("\n\n\n\(error.description)\n\n")
     }

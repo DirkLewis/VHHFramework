@@ -2,4 +2,6 @@
 
 @interface Person : _Person {}
 // Custom logic goes here.
+
+- (NSString*)personDescription;
 @end
