@@ -31,7 +31,7 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
     }
     
     func testPersonAddress(){
-    
+        
         let bs = SqliteBackingstore(modelName: "TestModel")
         let repository = CoreRepository(backingstore: bs)
         repository.delegate = self
@@ -51,7 +51,7 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         address.street = "101 first"
         address.city = "Home Town"
         address.address_person = person
-
+        
         repository.managedObjectContext?.save(nil)
         
         repository.closeRepository()
@@ -88,22 +88,33 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         
         self.waitForExpectationsWithTimeout(5.0, handler: nil)
         person!.age = 60
-        //repository.managedObjectContext?.save(nil)
         repository.managedObjectContext!.reset()
-        let result = repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25)
-        let entities = repository.resultsForRequest(result.1!)
-        println("person count: \(entities.count)")
-        XCTAssertTrue(entities.count == 2, "wrong number of persons")
-        if let filtered:AnyObject = (entities.filter(){ $0.fName == "donna"}.first){
-            XCTAssertTrue(filtered.age == 50, "failed update")
-            println("\(filtered.personDescription())")
+        switch repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25){
+        case let fetchRequestReturnType.success(request):
+            switch repository.resultsForRequest(request){
+                case let repositoryDataReturnType.success(entities):
+                    println("person count: \(entities.count)")
+                    XCTAssertTrue(entities.count == 2, "wrong number of persons")
+                    if let filtered:AnyObject = (entities.filter(){ $0.fName == "donna"}.first){
+                        XCTAssertTrue(filtered.age == 50, "failed update")
+                        println("\(filtered.personDescription())")
+                    }
+                case let repositoryDataReturnType.failure(error):
+                    println("Error: \(error.description)")
+                
+            }
+            
+
+        case let fetchRequestReturnType.failure(error):
+            println("Error: \(error.description)")
         }
+        
         repository.closeRepository()
         repository.deleteRepository()
     }
     
     func testCurrentState(){
-    
+        
         let bs = SqliteBackingstore(modelName: "TestModel")
         let repository = CoreRepository(backingstore: bs)
         repository.delegate = self
@@ -119,7 +130,7 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
     }
     
     func testStateMachine(){
-    
+        
         let bs = SqliteBackingstore(modelName: "TestModel")
         let repository = CoreRepository(backingstore: bs)
         repository.delegate = self
@@ -128,12 +139,12 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
     }
     
     func testFetchRequestFetchEntities(){
-    
+        
         let bs = SqliteBackingstore(modelName: "TestModel")
         let repository = CoreRepository(backingstore: bs)
         repository.delegate = self
         XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
-       
+        
         if (((repository.stateMachine?.isInState(kOpenedRepositoryState)) == true)){
             let description = repository.repositoryDescription
             println("\(description)")
@@ -152,9 +163,21 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         
         repository.managedObjectContext?.save(nil)
         
-        let result = repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25)
-        let entities = repository.resultsForRequest(result.1!)
-        println("person count: \(entities.count)")
+        switch repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25){
+        case let fetchRequestReturnType.success(request):
+            switch repository.resultsForRequest(request){
+            case let repositoryDataReturnType.success(entities):
+                println("person count: \(entities.count)")
+                
+            case let repositoryDataReturnType.failure(error):
+                println("Error: \(error.description)")
+            }
+        case let fetchRequestReturnType.failure(error):
+            println("Error: \(error.description)")
+            
+            
+        }
+        
         repository.closeRepository()
         repository.deleteRepository()
     }
@@ -164,10 +187,15 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         let repository = CoreRepository(backingstore: bs)
         repository.delegate = self
         XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
-        let result = repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25)
-        XCTAssertTrue(result.0 == nil, "There was an error")
-        XCTAssertTrue(result.1 != nil, "There should be a FetchRequest")
-
+        switch repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25){
+        case let fetchRequestReturnType.success(request):
+            XCTAssertTrue(true, "should have been a success")
+            
+        case let fetchRequestReturnType.failure(error):
+            XCTAssertTrue(false, "should not have failed")
+            println("Error: \(error.description)")
+        }
+        
     }
     
     func testCreateFetchRequestForFail(){
@@ -176,26 +204,30 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         repository.delegate = self
         XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
         repository.closeRepository()
-        let result = repository.fetchRequestForEntityNamed(Person.entityName())
-        XCTAssertTrue(result.0 != nil, "There should have been and error")
-        let message = (result.0?.userInfo?["message"] as! String)
-
-        XCTAssertTrue(message == "Repository is closed, please open.", "There should have been and error")
+        switch repository.fetchRequestForEntityNamed(Person.entityName()){
+        case let fetchRequestReturnType.success(result):
+            XCTAssertTrue(false, "should not have suceeded.")
+        case let fetchRequestReturnType.failure(error):
+            XCTAssertTrue(true, "There should have been and error")
+            XCTAssertTrue((error.userInfo?["message"] as! String) == "Repository is closed, please open.", "There should have been and error")
+            
+        }
+        
     }
     
     func testInsertingNewEntityIntoRepository(){
-    
+        
         let bs = SqliteBackingstore(modelName: "TestModel")
         let repository = CoreRepository(backingstore: bs)
         repository.delegate = self
         XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
-
+        
         let person = Person.insertInManagedObjectContext(repository.managedObjectContext)
         
         person.fName = "dirk"
         person.lName = "Lewis"
         person.age = 50
-
+        
         repository.managedObjectContext?.save(nil)
         
         if (((repository.stateMachine?.isInState(kOpenedRepositoryState)) == true)){
@@ -205,15 +237,15 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         
         repository.closeRepository()
         repository.deleteRepository()
-
+        
     }
     
     func testBackingstoreModelNameInitialization(){
-    
+        
         let bs = SqliteBackingstore(modelName: "TestModel")
         let description = bs.backingstoreDescription
         XCTAssertFalse(description.isEmpty, "should have a data")
-
+        
         println("\(description)")
         
     }
@@ -225,7 +257,7 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         XCTAssertFalse(description.isEmpty, "should have a data")
         println("\(description)")
         bs.resetPersistentStoreCoordiator(true)
-
+        
     }
     
     func testBackingstoreConfigNameInitialization(){
@@ -235,18 +267,18 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         XCTAssertFalse(description.isEmpty, "should have a data")
         println("\(description)")
         bs.resetPersistentStoreCoordiator(true)
-
+        
     }
     
     func testBackingstoreCreateManageObjectContext(){
-    
+        
         let bs = SqliteBackingstore(modelName: "TestModel")
         let moc = bs.managedObjectContext
         let description = bs.backingstoreDescription
         XCTAssertFalse(description.isEmpty, "should have a data")
         println("\(description)")
         bs.resetPersistentStoreCoordiator(true)
-
+        
     }
     
     func testRepositoryDelete(){
@@ -264,7 +296,7 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
     
     func testRepositoryReset(){
         let bs = SqliteBackingstore(modelName: "TestModel")
-
+        
         let repository = CoreRepository(backingstore: bs)
         repository.delegate = self
         let opened = repository.openRepository()

@@ -9,11 +9,16 @@
 import Foundation
 import CoreData
 
-enum RepositoryTuple: Int{
-    case message = 0
-    case object = 1
+
+enum fetchRequestReturnType{
+    case failure(NSError)
+    case success(NSFetchRequest)
 }
 
+enum repositoryDataReturnType{
+    case failure(NSError)
+    case success([AnyObject])
+}
 protocol CoreRepositoryProtocol{
 
     init(backingstore: BackingstoreProtocol)
@@ -27,10 +32,10 @@ protocol CoreRepositoryProtocol{
     var repositoryDescription: String{get}
     
     
-    func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> (NSError?, NSFetchRequest?)
-    func fetchRequestForEntityNamed(entityName: String) -> (NSError?, NSFetchRequest?)
+    func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> fetchRequestReturnType
+    func fetchRequestForEntityNamed(entityName: String) -> fetchRequestReturnType
     func resultsForRequestAsync(request:NSFetchRequest)
-    func resultsForRequest(request:NSFetchRequest) -> [AnyObject]
+    func resultsForRequest(request:NSFetchRequest) -> repositoryDataReturnType
     func deleteManagedObject(managedObject:NSManagedObject)
     
     func save() -> Bool

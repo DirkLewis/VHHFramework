@@ -14,6 +14,8 @@ let defaultBatchSize = 25
 let repositoryErrorDomain = "com.vhh.corerepository"
 let repositoryFailCode = -200
 
+
+
 class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
     
     var backingstore: BackingstoreProtocol?
@@ -79,7 +81,7 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         return self.stateMachine?.currentStateName()
     }
     
-    func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> (NSError?, NSFetchRequest?){
+    func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> fetchRequestReturnType{
         var fetchrequest: NSFetchRequest? = nil
         
         if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
@@ -87,35 +89,36 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
             fetchrequest!.fetchBatchSize = batchsize
             
             if let request = fetchrequest{
-                return (nil,fetchrequest)
+                return fetchRequestReturnType.success(fetchrequest!)
             }
             else{
-                return (NSError(domain: repositoryErrorDomain, code: repositoryFailCode, userInfo: ["message":"FetchRequest failed initialization."]), fetchrequest)
+                return fetchRequestReturnType.failure(NSError(domain: repositoryErrorDomain, code: repositoryFailCode, userInfo: ["message":"FetchRequest failed initialization."]))
             }
         }
         else{
-            return (NSError(domain: repositoryErrorDomain, code: repositoryFailCode, userInfo: ["message":"Repository is closed, please open."]), fetchrequest)
+            return fetchRequestReturnType.failure(NSError(domain: repositoryErrorDomain, code: repositoryFailCode, userInfo: ["message":"Repository is closed, please open."]))
         }
     }
     
-    func fetchRequestForEntityNamed(entityName: String) -> (NSError?, NSFetchRequest?){
+    func fetchRequestForEntityNamed(entityName: String) -> fetchRequestReturnType{
         return self.fetchRequestForEntityNamed(entityName, batchsize: defaultBatchSize)
     }
     
-    func resultsForRequest(request:NSFetchRequest) -> [AnyObject]{
+    func resultsForRequest(request:NSFetchRequest) -> repositoryDataReturnType{
         var error: NSError? = nil
         var results = [AnyObject]()
         
         if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
             self.managedObjectContext!.performBlockAndWait({ () -> Void in
                 results = self.managedObjectContext!.executeFetchRequest(request, error: &error)!
-                if let currenterror = error{
-                    self.delegate!.repositoryErrorGenerated(currenterror)
-                }
             })
         }
         
-        return results
+        if let currenterror = error{
+            self.delegate!.repositoryErrorGenerated(currenterror)
+            return repositoryDataReturnType.failure(currenterror)
+        }
+        return repositoryDataReturnType.success(results)
     }
     
     func resultsForRequestAsync(request:NSFetchRequest){
