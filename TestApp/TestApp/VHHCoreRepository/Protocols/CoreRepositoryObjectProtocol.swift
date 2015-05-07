@@ -7,9 +7,15 @@
 //
 
 import Foundation
+import CoreData
 
-protocol CoreRepositoryObjectProtocol{
+protocol CoreRepositoryObjectProtocol: AnyObject{
 
+    static func entityName() -> String
+    func printDescription()-> String
+    func objectId() -> NSManagedObjectID
+    var entityIdentifier: String {get}
     
-
+    //static var repository: CoreRepositoryProtocol {get}
+    var repository: CoreRepositoryProtocol {get}
 }

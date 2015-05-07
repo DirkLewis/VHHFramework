@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import VHHStateMachine
 
 let kClosedRepositoryState = "closedrepositorystate"
 let kOpenedRepositoryState = "openedrepositorystate"

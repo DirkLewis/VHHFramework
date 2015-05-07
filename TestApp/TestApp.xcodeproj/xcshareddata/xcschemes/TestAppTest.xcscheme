@@ -9,20 +9,6 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F384E0C31AF30A95009050FD"
-               BuildableName = "TestApp.app"
-               BlueprintName = "TestApp"
-               ReferencedContainer = "container:TestApp.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "YES">
@@ -56,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F384E0C31AF30A95009050FD"
-            BuildableName = "TestApp.app"
-            BlueprintName = "TestApp"
+            BlueprintIdentifier = "F384E0DA1AF30A95009050FD"
+            BuildableName = "TestAppTests.xctest"
+            BlueprintName = "TestAppTests"
             ReferencedContainer = "container:TestApp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -72,22 +58,16 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F384E0C31AF30A95009050FD"
-            BuildableName = "TestApp.app"
-            BlueprintName = "TestApp"
+            BlueprintIdentifier = "F384E0DA1AF30A95009050FD"
+            BuildableName = "TestAppTests.xctest"
+            BlueprintName = "TestAppTests"
             ReferencedContainer = "container:TestApp.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
-         <AdditionalOption
-            key = "NSZombieEnabled"
-            value = "YES"
-            isEnabled = "YES">
-         </AdditionalOption>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
@@ -96,16 +76,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F384E0C31AF30A95009050FD"
-            BuildableName = "TestApp.app"
-            BlueprintName = "TestApp"
+            BlueprintIdentifier = "F384E0DA1AF30A95009050FD"
+            BuildableName = "TestAppTests.xctest"
+            BlueprintName = "TestAppTests"
             ReferencedContainer = "container:TestApp.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

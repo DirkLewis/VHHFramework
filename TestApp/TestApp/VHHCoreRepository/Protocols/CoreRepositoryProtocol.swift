@@ -19,10 +19,13 @@ enum repositoryDataReturnType{
     case failure(NSError)
     case success([AnyObject])
 }
-protocol CoreRepositoryProtocol{
+
+
+protocol CoreRepositoryProtocol: class{
 
     init(backingstore: BackingstoreProtocol)
-
+    
+    var managedObjectContext: NSManagedObjectContext? {get}
     func resetRepository() -> Bool
     func deleteRepository() -> Bool
     func openRepository() -> Bool
@@ -30,14 +33,18 @@ protocol CoreRepositoryProtocol{
     var delegate:CoreRepositoryDelegate?{get set}
     func currentState() -> String?
     var repositoryDescription: String{get}
-    
+    var lastErrors: [NSError]?{get}
+
     
     func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> fetchRequestReturnType
     func fetchRequestForEntityNamed(entityName: String) -> fetchRequestReturnType
-    func resultsForRequestAsync(request:NSFetchRequest)
+    func resultsForRequestAsync(request:NSFetchRequest, handler:(repositoryDataReturnType)->())
     func resultsForRequest(request:NSFetchRequest) -> repositoryDataReturnType
+    func fetchEntityForEntityIdentifier<T: CoreRepositoryObjectProtocol>(identifier:String) -> T?
+    func fetchEntityWithFilter<T: CoreRepositoryObjectProtocol>(filter:(includedElement:AnyObject) -> Bool) -> [T]
     func deleteManagedObject(managedObject:NSManagedObject)
+    func createNewEntity<T: CoreRepositoryObjectProtocol>() -> T
     
     func save() -> Bool
-    func saveAsync()
+    func saveAsync(handler:(NSError?)->())
 }

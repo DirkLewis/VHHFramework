@@ -13,6 +13,7 @@ import Foundation
 
 class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
     
+    var openexpectation: XCTestExpectation? = nil
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -30,6 +31,129 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         }
     }
     
+    func testEntitySpecificRepository(){
+    
+        Person.repository.openRepository()
+        Address.repository.openRepository()
+        
+        self.createTwoPersons(Person.repository)
+        let person:Person = Person.repository.fetchEntityForEntityIdentifier("1")!
+        let address:Address = Person.repository.createNewEntity()
+        address.street = "101 street"
+        address.address_person = person
+        person.repository.save()
+
+        person.repository.closeRepository()
+        
+        let person2:Person = Address.repository.fetchEntityForEntityIdentifier("1")!
+        let address2:Address = Address.repository.createNewEntity()
+        address2.street = "102 street"
+        address2.address_person = person2
+        address2.repository.save()
+        address2.repository.closeRepository()
+        
+        address2.repository.deleteRepository()
+        
+    }
+    
+    func testbundel(){
+    
+        let modelName = "TestModel"
+        
+        let bundle = NSBundle(forClass: VHHCoreRepositoryTests.self)
+        println("\(NSBundle.allBundles())")
+        
+            for modelpath in bundle.pathsForResourcesOfType("momd", inDirectory: nil){
+                
+                if let pathArray = NSURL.fileURLWithPath(modelpath as! String)?.pathComponents?.filter({ (name) -> Bool in
+                    return name as! String == "\(modelName).momd"
+                }){
+                    
+                    let momdURL = NSURL.fileURLWithPath(modelpath as! String)
+                    println("\(bundle)")
+                }
+            }
+        
+    }
+    
+    func testFetchByEntityIdentifier(){
+        let bs = SqliteBackingstore(modelName: "TestModel")
+        let repository = CoreRepository(backingstore: bs)
+        repository.delegate = self
+        XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
+        println("\(repository.repositoryDescription)")
+        self.createTwoPersons(repository)
+        
+        let person:Person? = repository.fetchEntityForEntityIdentifier("1")
+        
+        let fetched:[Person] = repository.fetchEntityWithFilter({($0 as! Person).fName == "dirk"})
+        
+        let fetchedagain:[Person] = repository.fetchEntityWithFilter(){a in
+            return a.fName == "dirk"
+        }
+        
+        XCTAssertTrue(person?.fName == "dirk", "wrong person")
+        XCTAssertTrue(fetched.count == 1 && fetched[0].fName == "dirk", "should only be one person")
+        XCTAssertTrue(fetchedagain.count == 1, "should only be one person")
+
+        repository.closeRepository()
+        repository.deleteRepository()
+        
+    }
+    
+    func testAsyncFetch(){
+        
+        let expectation = self.expectationWithDescription("asyncfetch")
+        let bs = SqliteBackingstore(modelName: "TestModel")
+        let repository = CoreRepository(backingstore: bs)
+        repository.delegate = self
+        XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
+        
+        self.createTwoPersons(repository)
+        
+        switch repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25){
+        case let fetchRequestReturnType.success(request):
+            repository.resultsForRequestAsync(request, handler: { (dataresult) -> () in
+                switch dataresult{
+                case let repositoryDataReturnType.success(entities):
+                    println("person count: \(entities.count)")
+                    XCTAssertTrue(entities.count == 2, "wrong number of persons")
+                    if let filtered = (entities.filter({($0 as! Person).fName == "donna"}).first) as? Person{
+                        XCTAssertTrue(filtered.age == 50, "failed update")
+                        println("\(filtered.printDescription())")
+                    }
+                    
+                    repository.closeRepository()
+                    repository.deleteRepository()
+                    expectation.fulfill()
+                case let repositoryDataReturnType.failure(error):
+                    println("Error: \(error.description)")
+                }
+            })
+    
+        case let fetchRequestReturnType.failure(error):
+            println("Error: \(error)")
+        }
+        
+        self.waitForExpectationsWithTimeout(5.0, handler: { (error) -> Void in
+            println("wait fullfilled")
+        })
+    }
+    
+    func testDelegateOpen(){
+        
+        self.openexpectation = self.expectationWithDescription("open")
+        let bs = SqliteBackingstore(modelName: "TestModel")
+        let repository = CoreRepository(backingstore: bs)
+        repository.delegate = self
+        XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
+        
+        self.waitForExpectationsWithTimeout(5.0, handler: nil)
+        
+        repository.closeRepository()
+        repository.deleteRepository()
+    }
+    
     func testPersonAddress(){
         
         let bs = SqliteBackingstore(modelName: "TestModel")
@@ -42,17 +166,27 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
             println("\(description)")
         }
         
-        let person = Person.insertInManagedObjectContext(repository.managedObjectContext)
-        person.fName = "dirk"
-        person.lName = "lewis"
-        person.age = 50
+        self.createPersonWithAddress(repository)
         
-        let address = Address.insertInManagedObjectContext(repository.managedObjectContext)
-        address.street = "101 first"
-        address.city = "Home Town"
-        address.address_person = person
-        
-        repository.managedObjectContext?.save(nil)
+        switch repository.fetchRequestForEntityNamed(Person.entityName()){
+        case let fetchRequestReturnType.success(request):
+            switch repository.resultsForRequest(request){
+            case let repositoryDataReturnType.success(entities):
+                println("person count: \(entities.count)")
+                XCTAssertTrue(entities.count == 1, "wrong number of persons")
+                if let filtered = (entities.filter({($0 as! Person).fName == "dirk"}).first) as? Person{
+                    let address = filtered.person_address.first
+                    XCTAssertTrue(address?.street == "101 first", "wrong address found")
+                    println("\(filtered.printDescription())")
+                }
+                
+            case let repositoryDataReturnType.failure(error):
+                println("Error: \(error.description)")
+                
+            }
+        case let fetchRequestReturnType.failure(error):
+            println("Error: \(error.localizedDescription)")
+        }
         
         repository.closeRepository()
         repository.deleteRepository()
@@ -71,40 +205,29 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         }
         
         let expectation = self.expectationWithDescription("context threading")
-        var person: Person? = nil
         repository.managedObjectContext!.performBlock { () -> Void in
-            person = Person.insertInManagedObjectContext(repository.managedObjectContext)
-            
-            person!.fName = "dirk"
-            person!.lName = "Lewis"
-            person!.age = 50
-            person = Person.insertInManagedObjectContext(repository.managedObjectContext)
-            person!.fName = "donna"
-            person!.lName = "Lewis"
-            person!.age = 50
-            repository.managedObjectContext!.save(nil)
+            self.createTwoPersons(repository)
             expectation.fulfill()
         }
         
         self.waitForExpectationsWithTimeout(5.0, handler: nil)
-        person!.age = 60
-        repository.managedObjectContext!.reset()
         switch repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25){
         case let fetchRequestReturnType.success(request):
             switch repository.resultsForRequest(request){
-                case let repositoryDataReturnType.success(entities):
-                    println("person count: \(entities.count)")
-                    XCTAssertTrue(entities.count == 2, "wrong number of persons")
-                    if let filtered:AnyObject = (entities.filter(){ $0.fName == "donna"}.first){
-                        XCTAssertTrue(filtered.age == 50, "failed update")
-                        println("\(filtered.personDescription())")
-                    }
-                case let repositoryDataReturnType.failure(error):
-                    println("Error: \(error.description)")
+            case let repositoryDataReturnType.success(entities):
+                println("person count: \(entities.count)")
+                XCTAssertTrue(entities.count == 2, "wrong number of persons")
+                if let filtered = (entities.filter({($0 as! Person).fName == "donna"}).first) as? Person{
+                    XCTAssertTrue(filtered.age == 50, "failed update")
+                    println("\(filtered.printDescription())")
+                }
+
+            case let repositoryDataReturnType.failure(error):
+                println("Error: \(error.description)")
                 
             }
             
-
+            
         case let fetchRequestReturnType.failure(error):
             println("Error: \(error.description)")
         }
@@ -127,6 +250,10 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         XCTAssertTrue(repository.stateMachine?.isInState(repository.currentState()!) == true, "wrong state")
         XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
         XCTAssertTrue(repository.stateMachine?.isInState(repository.currentState()!) == true, "wrong state")
+        
+        repository.closeRepository()
+        repository.deleteRepository()
+        
     }
     
     func testStateMachine(){
@@ -136,6 +263,8 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         repository.delegate = self
         XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
         XCTAssertFalse(repository.deleteRepository(), "should return false")
+        repository.closeRepository()
+        repository.deleteRepository()
     }
     
     func testFetchRequestFetchEntities(){
@@ -149,18 +278,18 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
             let description = repository.repositoryDescription
             println("\(description)")
         }
-        var person = Person.insertInManagedObjectContext(repository.managedObjectContext)
+        var person:Person = repository.createNewEntity()
         
         person.fName = "dirk"
         person.lName = "Lewis"
         person.age = 50
-        
-        person = Person.insertInManagedObjectContext(repository.managedObjectContext)
+        person.entityIdentifier = "1"
+        person = repository.createNewEntity()
         
         person.fName = "donna"
         person.lName = "Lewis"
         person.age = 50
-        
+        person.entityIdentifier = "2"
         repository.managedObjectContext?.save(nil)
         
         switch repository.fetchRequestForEntityNamed(Person.entityName(), batchsize: 25){
@@ -222,12 +351,12 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         repository.delegate = self
         XCTAssertTrue(repository.openRepository(), "failed to open backingstore")
         
-        let person = Person.insertInManagedObjectContext(repository.managedObjectContext)
+        let person:Person = repository.createNewEntity()
         
         person.fName = "dirk"
         person.lName = "Lewis"
         person.age = 50
-        
+        person.entityIdentifier = "1"
         repository.managedObjectContext?.save(nil)
         
         if (((repository.stateMachine?.isInState(kOpenedRepositoryState)) == true)){
@@ -321,18 +450,18 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
     }
     
     // MARK: - delgate methods
+    
+    func repositoryErrorEmmited(error: NSError) {
+        println("Error: \(error.localizedDescription)")
+    }
+    
     func repositorySaveResults(results: Bool) {
         println("Save was: \(results)")
-    }
-    func repositoryFetchResults(results: [AnyObject]) {
-        println("\(results)")
-    }
-    func repositoryErrorGenerated(error: NSError) {
-        println("\n\n\n\(error.description)\n\n")
     }
     
     func repositoryOpened(context: NSManagedObjectContext?) {
         println("moc: \(context)")
+        self.openexpectation?.fulfill()
     }
     
     func repositoryClosed() {
@@ -347,7 +476,63 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         println("repository deleted")
     }
     
-    func backingstoreErrorGenerated(error: NSError) {
-        println("error: \(error)")
+    // MARK: - Data Creation Helpers
+    
+    func fetchAPerson(repository:CoreRepository) -> AnyObject?{
+    
+        switch repository.fetchRequestForEntityNamed(Person.entityName()){
+        case let fetchRequestReturnType.success(request):
+            switch repository.resultsForRequest(request){
+            case let repositoryDataReturnType.success(results):
+                if results.count > 0{
+                    
+                    var x: AnyObject = results.first!
+                    
+                    println("")
+                    return x
+                }
+            case let repositoryDataReturnType.failure(error):
+                println("Error: \(error.localizedDescription)")
+            }
+        case let fetchRequestReturnType.failure(error):
+            println("Error: \(error.localizedDescription)")
+            
+        }
+        return nil
+    }
+    
+    func createPersonWithAddress(repository:CoreRepository){
+    
+        let person:Person = repository.createNewEntity()
+        person.fName = "dirk"
+        person.lName = "lewis"
+        person.age = 50
+        person.entityIdentifier = "1"
+        
+        let address:Address = repository.createNewEntity()
+        address.street = "101 first"
+        address.city = "Home Town"
+        address.address_person = person
+        address.entityIdentifier = "1"
+        
+        repository.save()
+        
+    }
+    
+    func createTwoPersons(repository:CoreRepositoryProtocol){
+        var person: Person
+        
+        person = repository.createNewEntity()
+        person.entityIdentifier = "1"
+        person.age = 50
+        person.fName = "dirk"
+        person.lName = "Lewis"
+        person = repository.createNewEntity()
+        person.entityIdentifier = "2"
+        person.fName = "donna"
+        person.lName = "Lewis"
+        person.age = 50
+        
+        repository.save()
     }
 }

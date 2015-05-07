@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import VHHStateMachine
 
 let defaultBatchSize = 25
 let repositoryErrorDomain = "com.vhh.corerepository"
@@ -22,36 +21,38 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
     var managedObjectContext: NSManagedObjectContext?
     var delegate: CoreRepositoryDelegate?
     var stateMachine: StateMachine?
+    var lastErrors: [NSError]?
     
     required init(backingstore: BackingstoreProtocol){
         self.backingstore = backingstore
         self.backingstore?.delegate = self
-        
         self.stateMachine = CoreRepositoryFactory.createRepositoryStatemachine()
         self.stateMachine?.startMachine()
+        self.lastErrors  = [NSError]()
     }
     
     // MARK: - core data helper methods
     
     // MARK: - helper methods
     
-    func childManagedObjectContext() -> NSManagedObjectContext {
-        
-        let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        privateContext.parentContext = self.managedObjectContext
-        
-        return privateContext
+    func lastError() -> NSError?{
+    
+        return self.lastErrors?.first
     }
     
-    func changeStateForEvent(eventName: String) -> Bool{
+    private func changeStateForEvent(eventName: String)->Bool{
         
         var error: NSError?
         if let success = self.stateMachine?.changeStateForEvent(eventName, userInfo: ["repository":self], error: &error){
-            if error != nil{
-                self.delegate?.repositoryErrorGenerated(error!)
+            if let currenterror = error{
+                self.lastErrors?.append(currenterror)
+                self.delegate?.repositoryErrorEmmited(currenterror)
             }
-            return success
+            else{
+                return true
+            }
         }
+        
         return false
     }
     
@@ -111,27 +112,28 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
             self.managedObjectContext!.performBlockAndWait({ () -> Void in
                 results = self.managedObjectContext!.executeFetchRequest(request, error: &error)!
+                println("\(results)")
             })
         }
         
         if let currenterror = error{
-            self.delegate!.repositoryErrorGenerated(currenterror)
             return repositoryDataReturnType.failure(currenterror)
         }
         return repositoryDataReturnType.success(results)
     }
     
-    func resultsForRequestAsync(request:NSFetchRequest){
+    func resultsForRequestAsync(request:NSFetchRequest, handler:(repositoryDataReturnType) -> ()){
         var error: NSError? = nil
         if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
             self.managedObjectContext!.performBlock({ () -> Void in
                 if let results = self.managedObjectContext!.executeFetchRequest(request, error: &error){
                     if let currenterror = error{
-                        self.delegate!.repositoryErrorGenerated(currenterror)
+                        handler(repositoryDataReturnType.failure(currenterror))
                     }
-                    self.delegate?.repositoryFetchResults?(results)
+                    else{
+                        handler(repositoryDataReturnType.success(results))
+                    }
                 }
-                
             })
         }
     }
@@ -142,15 +144,12 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
         }
     }
     
-    func saveAsync() {
+    func saveAsync(handler:(NSError?)->()) {
         if self.stateMachine?.isInState(kOpenedRepositoryState) == true{
             self.managedObjectContext!.performBlock{ () -> Void in
                 var error: NSError? = nil
-                let result = self.managedObjectContext!.save(&error)
-                if error != nil{
-                    self.delegate?.repositoryErrorGenerated(error!)
-                }
-                self.delegate?.repositorySaveResults?(result)
+                self.managedObjectContext!.save(&error)
+                handler(error!)
             }
         }
     }
@@ -161,17 +160,63 @@ class CoreRepository: CoreRepositoryProtocol, BackingstoreDelegate {
             self.managedObjectContext!.performBlockAndWait{ () -> Void in
                 var error: NSError? = nil
                 var saved: Bool = self.managedObjectContext!.save(&error)
-                if error != nil{
-                    self.delegate?.repositoryErrorGenerated(error!)
+                if let currenterror = error{
+                    self.delegate?.repositoryErrorEmmited(currenterror)
+                    self.lastErrors?.append(currenterror)
                 }
             }
         }
         return saved
     }
     
+    func createNewEntity<T:CoreRepositoryObjectProtocol>() -> T{
+        return NSEntityDescription.insertNewObjectForEntityForName(T.entityName(), inManagedObjectContext: self.managedObjectContext!) as! T
+    }
+    
+    func fetchEntityForEntityIdentifier<T: CoreRepositoryObjectProtocol>(identifier:String) -> T?{
+    
+        switch self.fetchRequestForEntityNamed(T.entityName()){
+        case let fetchRequestReturnType.success(request):
+            switch self.resultsForRequest(request){
+            case let repositoryDataReturnType.success(results):
+                if let filtered = (results.filter({($0 as! T).entityIdentifier == identifier as String}).first) as? T{
+                    println("\(filtered.printDescription())")
+                    return filtered
+                }
+            case let repositoryDataReturnType.failure(error):
+                println("Error: \(error.localizedDescription)")
+            }
+        case let fetchRequestReturnType.failure(error):
+            println("Error: \(error.localizedDescription)")
+            
+        }
+        return nil
+    }
+    
+    func fetchEntityWithFilter<T: CoreRepositoryObjectProtocol>(filter:(includedElement:AnyObject) -> Bool) -> [T]{
+    
+        switch self.fetchRequestForEntityNamed(T.entityName()){
+        case let fetchRequestReturnType.success(request):
+            switch self.resultsForRequest(request){
+            case let repositoryDataReturnType.success(results):
+                let filtered = results.filter(filter)
+                println("Count: \(filtered.count)")
+                return filtered as! [T]
+                //return filtered.map({$0 as! T})
+            case let repositoryDataReturnType.failure(error):
+                println("Error: \(error.localizedDescription)")
+            }
+        case let fetchRequestReturnType.failure(error):
+            println("Error: \(error.localizedDescription)")
+            
+        }
+        return [T]()
+    
+    }
+    
     // MARK: - core repository delegate
-    func backingstoreErrorGenerated(error: NSError) {
-        self.delegate?.repositoryErrorGenerated(error)
+    func backingstoreErrorEmitted(error: NSError) {
+        self.lastErrors?.append(error)
     }
     
 }

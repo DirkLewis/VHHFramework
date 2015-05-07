@@ -10,6 +10,6 @@ import Foundation
 
 protocol BackingstoreDelegate{
 
-    func backingstoreErrorGenerated(error:NSError)
+    func backingstoreErrorEmitted(error:NSError)
     
 }

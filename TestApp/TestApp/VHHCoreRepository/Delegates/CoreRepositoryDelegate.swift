@@ -10,9 +10,8 @@ import Foundation
 import CoreData
 @objc protocol CoreRepositoryDelegate{
 
-    func repositoryErrorGenerated(error:NSError)
     func repositoryOpened(context: NSManagedObjectContext?)
-    optional func repositoryFetchResults(results:[AnyObject])
+    func repositoryErrorEmmited(error: NSError)
     optional func repositorySaveResults(results:Bool)
     optional func repositoryClosed()
     optional func repositoryReset()

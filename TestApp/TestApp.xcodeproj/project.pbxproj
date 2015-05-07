@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43A417BC1AF4FFE3003698E2 /* _Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A417BB1AF4FFE3003698E2 /* _Person.m */; };
-		43A417BD1AF4FFE3003698E2 /* _Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A417BB1AF4FFE3003698E2 /* _Person.m */; };
-		43A417C71AF50952003698E2 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A417C61AF50952003698E2 /* Person.m */; };
-		43A417C81AF50952003698E2 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A417C61AF50952003698E2 /* Person.m */; };
+		F34C923B1AFA57A400FB01C2 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD46A1AFA4149004BBAD7 /* TestModel.xcdatamodeld */; };
 		F384E0CA1AF30A95009050FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E0C91AF30A95009050FD /* AppDelegate.swift */; };
 		F384E0CC1AF30A95009050FD /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E0CB1AF30A95009050FD /* MasterViewController.swift */; };
 		F384E0CE1AF30A95009050FD /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E0CD1AF30A95009050FD /* DetailViewController.swift */; };
@@ -18,8 +15,6 @@
 		F384E0D31AF30A95009050FD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F384E0D21AF30A95009050FD /* Images.xcassets */; };
 		F384E0D61AF30A95009050FD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F384E0D41AF30A95009050FD /* LaunchScreen.xib */; };
 		F384E0E21AF30A95009050FD /* TestAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E0E11AF30A95009050FD /* TestAppTests.swift */; };
-		F384E1051AF30C68009050FD /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F384E0ED1AF30C68009050FD /* TestModel.xcdatamodeld */; };
-		F384E1061AF30C68009050FD /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F384E0ED1AF30C68009050FD /* TestModel.xcdatamodeld */; };
 		F384E1071AF30C68009050FD /* CoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E0F21AF30C68009050FD /* CoreRepository.swift */; };
 		F384E1081AF30C68009050FD /* CoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E0F21AF30C68009050FD /* CoreRepository.swift */; };
 		F384E1091AF30C68009050FD /* CoreRepositoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E0F31AF30C68009050FD /* CoreRepositoryFactory.swift */; };
@@ -46,12 +41,10 @@
 		F384E11E1AF30C68009050FD /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E1021AF30C68009050FD /* StateMachine.swift */; };
 		F384E1211AF30CDB009050FD /* VHHCoreRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E11F1AF30CDB009050FD /* VHHCoreRepositoryTests.swift */; };
 		F384E1221AF30CDB009050FD /* VHHStateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E1201AF30CDB009050FD /* VHHStateMachineTests.swift */; };
-		F3CE44841AF50DE8007AF967 /* _Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CE44831AF50DE8007AF967 /* _Address.m */; };
-		F3CE44851AF50DE8007AF967 /* _Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CE44831AF50DE8007AF967 /* _Address.m */; };
-		F3CE44881AF50DFD007AF967 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CE44871AF50DFD007AF967 /* Address.m */; };
-		F3CE44891AF50DFD007AF967 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CE44871AF50DFD007AF967 /* Address.m */; };
-		F3CE448B1AF511EC007AF967 /* SwiftPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE448A1AF511EC007AF967 /* SwiftPerson.swift */; };
-		F3CE448C1AF511EC007AF967 /* SwiftPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE448A1AF511EC007AF967 /* SwiftPerson.swift */; };
+		F3A6825A1AF8486500157339 /* ModelObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A682591AF8486500157339 /* ModelObjectTests.swift */; };
+		F3DDD46E1AFA4149004BBAD7 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD4671AFA4149004BBAD7 /* Address.swift */; };
+		F3DDD4701AFA4149004BBAD7 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD4691AFA4149004BBAD7 /* Person.swift */; };
+		F3DDD4721AFA4149004BBAD7 /* TestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD46D1AFA4149004BBAD7 /* TestRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,10 +58,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		43A417BA1AF4FFE3003698E2 /* _Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Person.h; sourceTree = "<group>"; };
-		43A417BB1AF4FFE3003698E2 /* _Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Person.m; sourceTree = "<group>"; };
-		43A417C51AF50952003698E2 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		43A417C61AF50952003698E2 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		F384E0C41AF30A95009050FD /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F384E0C81AF30A95009050FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F384E0C91AF30A95009050FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,8 +69,6 @@
 		F384E0DB1AF30A95009050FD /* TestAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F384E0E01AF30A95009050FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F384E0E11AF30A95009050FD /* TestAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppTests.swift; sourceTree = "<group>"; };
-		F384E0EE1AF30C68009050FD /* TestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestModel.xcdatamodel; sourceTree = "<group>"; };
-		F384E0EF1AF30C68009050FD /* TestModel1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestModel1.xcdatamodel; sourceTree = "<group>"; };
 		F384E0F21AF30C68009050FD /* CoreRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreRepository.swift; sourceTree = "<group>"; };
 		F384E0F31AF30C68009050FD /* CoreRepositoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreRepositoryFactory.swift; sourceTree = "<group>"; };
 		F384E0F41AF30C68009050FD /* SqliteBackingstore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqliteBackingstore.swift; sourceTree = "<group>"; };
@@ -96,12 +83,12 @@
 		F384E1021AF30C68009050FD /* StateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
 		F384E11F1AF30CDB009050FD /* VHHCoreRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VHHCoreRepositoryTests.swift; sourceTree = "<group>"; };
 		F384E1201AF30CDB009050FD /* VHHStateMachineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VHHStateMachineTests.swift; sourceTree = "<group>"; };
-		F384E1301AF30E76009050FD /* -Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "-Bridging-Header.h"; sourceTree = "<group>"; };
-		F3CE44821AF50DE8007AF967 /* _Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Address.h; sourceTree = "<group>"; };
-		F3CE44831AF50DE8007AF967 /* _Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Address.m; sourceTree = "<group>"; };
-		F3CE44861AF50DFD007AF967 /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
-		F3CE44871AF50DFD007AF967 /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
-		F3CE448A1AF511EC007AF967 /* SwiftPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPerson.swift; sourceTree = "<group>"; };
+		F3A682591AF8486500157339 /* ModelObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelObjectTests.swift; path = TestAppTests/ModelObjectTests.swift; sourceTree = SOURCE_ROOT; };
+		F3DDD4671AFA4149004BBAD7 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		F3DDD4691AFA4149004BBAD7 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		F3DDD46B1AFA4149004BBAD7 /* TestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestModel.xcdatamodel; sourceTree = "<group>"; };
+		F3DDD46C1AFA4149004BBAD7 /* TestModel1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestModel1.xcdatamodel; sourceTree = "<group>"; };
+		F3DDD46D1AFA4149004BBAD7 /* TestRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,7 +130,6 @@
 		F384E0C61AF30A95009050FD /* TestApp */ = {
 			isa = PBXGroup;
 			children = (
-				F384E0EB1AF30C68009050FD /* Model */,
 				F384E0F01AF30C68009050FD /* VHHCoreRepository */,
 				F384E0FD1AF30C68009050FD /* VHHStateMachine */,
 				F384E12D1AF30E1E009050FD /* Appdelegate */,
@@ -167,6 +153,8 @@
 		F384E0DE1AF30A95009050FD /* TestAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				F3DDD4651AFA4149004BBAD7 /* Model */,
+				F3A682591AF8486500157339 /* ModelObjectTests.swift */,
 				F384E11F1AF30CDB009050FD /* VHHCoreRepositoryTests.swift */,
 				F384E1201AF30CDB009050FD /* VHHStateMachineTests.swift */,
 				F384E0E11AF30A95009050FD /* TestAppTests.swift */,
@@ -181,16 +169,6 @@
 				F384E0E01AF30A95009050FD /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F384E0EB1AF30C68009050FD /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				F384E0ED1AF30C68009050FD /* TestModel.xcdatamodeld */,
-				F384E1231AF30DE0009050FD /* Human */,
-				F384E1261AF30DE0009050FD /* Machine */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		F384E0F01AF30C68009050FD /* VHHCoreRepository */ = {
@@ -259,34 +237,10 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		F384E1231AF30DE0009050FD /* Human */ = {
-			isa = PBXGroup;
-			children = (
-				F3CE44861AF50DFD007AF967 /* Address.h */,
-				F3CE44871AF50DFD007AF967 /* Address.m */,
-				43A417C51AF50952003698E2 /* Person.h */,
-				43A417C61AF50952003698E2 /* Person.m */,
-				F3CE448A1AF511EC007AF967 /* SwiftPerson.swift */,
-			);
-			path = Human;
-			sourceTree = "<group>";
-		};
-		F384E1261AF30DE0009050FD /* Machine */ = {
-			isa = PBXGroup;
-			children = (
-				F3CE44821AF50DE8007AF967 /* _Address.h */,
-				F3CE44831AF50DE8007AF967 /* _Address.m */,
-				43A417BA1AF4FFE3003698E2 /* _Person.h */,
-				43A417BB1AF4FFE3003698E2 /* _Person.m */,
-			);
-			path = Machine;
-			sourceTree = "<group>";
-		};
 		F384E12D1AF30E1E009050FD /* Appdelegate */ = {
 			isa = PBXGroup;
 			children = (
 				F384E0C91AF30A95009050FD /* AppDelegate.swift */,
-				F384E1301AF30E76009050FD /* -Bridging-Header.h */,
 			);
 			name = Appdelegate;
 			sourceTree = "<group>";
@@ -306,6 +260,25 @@
 				F384E0CF1AF30A95009050FD /* Main.storyboard */,
 			);
 			name = StoryBoards;
+			sourceTree = "<group>";
+		};
+		F3DDD4651AFA4149004BBAD7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F3DDD4661AFA4149004BBAD7 /* Swift */,
+				F3DDD46A1AFA4149004BBAD7 /* TestModel.xcdatamodeld */,
+				F3DDD46D1AFA4149004BBAD7 /* TestRepository.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F3DDD4661AFA4149004BBAD7 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				F3DDD4671AFA4149004BBAD7 /* Address.swift */,
+				F3DDD4691AFA4149004BBAD7 /* Person.swift */,
+			);
+			path = Swift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -410,24 +383,18 @@
 			files = (
 				F384E10F1AF30C68009050FD /* CoreRepositoryDelegate.swift in Sources */,
 				F384E0CE1AF30A95009050FD /* DetailViewController.swift in Sources */,
-				F3CE448B1AF511EC007AF967 /* SwiftPerson.swift in Sources */,
 				F384E1151AF30C68009050FD /* CoreRepositoryProtocol.swift in Sources */,
 				F384E11D1AF30C68009050FD /* StateMachine.swift in Sources */,
 				F384E0CC1AF30A95009050FD /* MasterViewController.swift in Sources */,
 				F384E1131AF30C68009050FD /* CoreRepositoryObjectProtocol.swift in Sources */,
-				43A417C71AF50952003698E2 /* Person.m in Sources */,
 				F384E1071AF30C68009050FD /* CoreRepository.swift in Sources */,
 				F384E0CA1AF30A95009050FD /* AppDelegate.swift in Sources */,
 				F384E11B1AF30C68009050FD /* SMStatechange.swift in Sources */,
 				F384E1111AF30C68009050FD /* BackingstoreProtocol.swift in Sources */,
 				F384E10D1AF30C68009050FD /* BackingstoreDelegate.swift in Sources */,
 				F384E1171AF30C68009050FD /* SMEvent.swift in Sources */,
-				43A417BC1AF4FFE3003698E2 /* _Person.m in Sources */,
-				F384E1051AF30C68009050FD /* TestModel.xcdatamodeld in Sources */,
-				F3CE44841AF50DE8007AF967 /* _Address.m in Sources */,
 				F384E1191AF30C68009050FD /* SMState.swift in Sources */,
 				F384E1091AF30C68009050FD /* CoreRepositoryFactory.swift in Sources */,
-				F3CE44881AF50DFD007AF967 /* Address.m in Sources */,
 				F384E10B1AF30C68009050FD /* SqliteBackingstore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,26 +403,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F34C923B1AFA57A400FB01C2 /* TestModel.xcdatamodeld in Sources */,
 				F384E1081AF30C68009050FD /* CoreRepository.swift in Sources */,
 				F384E0E21AF30A95009050FD /* TestAppTests.swift in Sources */,
-				F3CE448C1AF511EC007AF967 /* SwiftPerson.swift in Sources */,
 				F384E1161AF30C68009050FD /* CoreRepositoryProtocol.swift in Sources */,
 				F384E1211AF30CDB009050FD /* VHHCoreRepositoryTests.swift in Sources */,
 				F384E1221AF30CDB009050FD /* VHHStateMachineTests.swift in Sources */,
+				F3DDD4721AFA4149004BBAD7 /* TestRepository.swift in Sources */,
 				F384E10E1AF30C68009050FD /* BackingstoreDelegate.swift in Sources */,
-				43A417C81AF50952003698E2 /* Person.m in Sources */,
 				F384E11C1AF30C68009050FD /* SMStatechange.swift in Sources */,
 				F384E11E1AF30C68009050FD /* StateMachine.swift in Sources */,
 				F384E1141AF30C68009050FD /* CoreRepositoryObjectProtocol.swift in Sources */,
+				F3A6825A1AF8486500157339 /* ModelObjectTests.swift in Sources */,
 				F384E11A1AF30C68009050FD /* SMState.swift in Sources */,
 				F384E1121AF30C68009050FD /* BackingstoreProtocol.swift in Sources */,
-				F384E1061AF30C68009050FD /* TestModel.xcdatamodeld in Sources */,
-				43A417BD1AF4FFE3003698E2 /* _Person.m in Sources */,
+				F3DDD46E1AFA4149004BBAD7 /* Address.swift in Sources */,
 				F384E10C1AF30C68009050FD /* SqliteBackingstore.swift in Sources */,
-				F3CE44851AF50DE8007AF967 /* _Address.m in Sources */,
+				F3DDD4701AFA4149004BBAD7 /* Person.swift in Sources */,
 				F384E1181AF30C68009050FD /* SMEvent.swift in Sources */,
 				F384E1101AF30C68009050FD /* CoreRepositoryDelegate.swift in Sources */,
-				F3CE44891AF50DFD007AF967 /* Address.m in Sources */,
 				F384E10A1AF30C68009050FD /* CoreRepositoryFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,7 +496,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "TestApp/-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -569,7 +535,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "TestApp/-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -582,7 +548,7 @@
 				INFOPLIST_FILE = TestApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "TestApp/-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
 		};
@@ -593,7 +559,7 @@
 				INFOPLIST_FILE = TestApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "TestApp/-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
@@ -612,8 +578,9 @@
 				INFOPLIST_FILE = TestAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "TestApp/-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -628,8 +595,9 @@
 				INFOPLIST_FILE = TestAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "TestApp/-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
@@ -666,13 +634,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		F384E0ED1AF30C68009050FD /* TestModel.xcdatamodeld */ = {
+		F3DDD46A1AFA4149004BBAD7 /* TestModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				F384E0EE1AF30C68009050FD /* TestModel.xcdatamodel */,
-				F384E0EF1AF30C68009050FD /* TestModel1.xcdatamodel */,
+				F3DDD46B1AFA4149004BBAD7 /* TestModel.xcdatamodel */,
+				F3DDD46C1AFA4149004BBAD7 /* TestModel1.xcdatamodel */,
 			);
-			currentVersion = F384E0EF1AF30C68009050FD /* TestModel1.xcdatamodel */;
+			currentVersion = F3DDD46C1AFA4149004BBAD7 /* TestModel1.xcdatamodel */;
 			path = TestModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

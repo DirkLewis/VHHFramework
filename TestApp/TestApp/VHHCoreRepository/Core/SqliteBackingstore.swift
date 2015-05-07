@@ -58,17 +58,15 @@ class SqliteBackingstore: BackingstoreProtocol {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         var momdURL: NSURL?
         
-        for bundle in NSBundle.allBundles(){
+        let bundle = NSBundle(forClass: SqliteBackingstore.self)
+        for modelpath in bundle.pathsForResourcesOfType("momd", inDirectory: nil){
             
-            for modelpath in bundle.pathsForResourcesOfType("momd", inDirectory: nil){
+            if let pathArray = NSURL.fileURLWithPath(modelpath as! String)?.pathComponents?.filter({ (name) -> Bool in
+                return name as! String == "\(self.modelName).momd"
+            }){
                 
-                if let pathArray = NSURL.fileURLWithPath(modelpath as! String)?.pathComponents?.filter({ (name) -> Bool in
-                    return name as! String == "\(self.modelName).momd"
-                }){
-                    
-                    momdURL = NSURL.fileURLWithPath(modelpath as! String)
-                    
-                }
+                momdURL = NSURL.fileURLWithPath(modelpath as! String)
+                
             }
         }
         return NSManagedObjectModel(contentsOfURL: momdURL!)!
@@ -78,6 +76,7 @@ class SqliteBackingstore: BackingstoreProtocol {
     
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
+        
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel()!)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.fileName)
         let options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true]
@@ -142,7 +141,7 @@ class SqliteBackingstore: BackingstoreProtocol {
         
         if error != nil{
             self.errorArray.append(error!)
-            self.delegate?.backingstoreErrorGenerated(error!)
+            self.delegate?.backingstoreErrorEmitted(error!)
             return false
         }
         

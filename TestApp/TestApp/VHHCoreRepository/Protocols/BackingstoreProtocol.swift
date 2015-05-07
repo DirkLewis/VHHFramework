@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-protocol BackingstoreProtocol: AnyObject{
+protocol BackingstoreProtocol: class{
 
     init(modelName: String, fileName: String?, configurationName: String?)
     var managedObjectContext: NSManagedObjectContext?{get}
