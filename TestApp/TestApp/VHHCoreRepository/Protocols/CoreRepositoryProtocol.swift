@@ -21,7 +21,7 @@ enum repositoryDataReturnType{
 }
 
 
-protocol CoreRepositoryProtocol: class{
+protocol CoreRepositoryProtocol: class, NSManagedObjectQueryProtocol{
 
     init(backingstore: BackingstoreProtocol)
     
@@ -36,15 +36,5 @@ protocol CoreRepositoryProtocol: class{
     var lastErrors: [NSError]?{get}
 
     
-    func fetchRequestForEntityNamed(entityName: String, batchsize:Int) -> fetchRequestReturnType
-    func fetchRequestForEntityNamed(entityName: String) -> fetchRequestReturnType
-    func resultsForRequestAsync(request:NSFetchRequest, handler:(repositoryDataReturnType)->())
-    func resultsForRequest(request:NSFetchRequest) -> repositoryDataReturnType
-    func fetchEntityForEntityIdentifier<T: CoreRepositoryObjectProtocol>(identifier:String) -> T?
-    func fetchEntityWithFilter<T: CoreRepositoryObjectProtocol>(filter:(includedElement:AnyObject) -> Bool) -> [T]
-    func deleteManagedObject(managedObject:NSManagedObject)
-    func createNewEntity<T: CoreRepositoryObjectProtocol>() -> T
-    
-    func save() -> Bool
-    func saveAsync(handler:(NSError?)->())
+
 }

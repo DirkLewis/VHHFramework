@@ -31,6 +31,42 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
         }
     }
     
+    func testQueryExtension(){
+    
+        let repository = TestRepository.createRepository()
+        repository.openRepository()
+        println("\(repository.repositoryDescription)")
+        var person:Person = repository.createNewEntity()
+        
+        person.fName = "hailey"
+        person.lName = "lewis"
+        person.age = 11
+        person.entityIdentifier = "abc"
+        
+
+        
+        repository.save()
+        
+        var address:Address = person.createNewEntity()
+        address.street = "2211 vero beach lane"
+        address.entityIdentifier    = "abc"
+        address.address_person = person
+        
+        var address2:Address = person.createNewEntity()
+        address2.street = "207 N. Christine"
+        address2.entityIdentifier = "def"
+        
+        repository.save()
+        
+        let address3:Address = person.fetchEntityForEntityIdentifier("def")!
+        address3.address_person = person
+        repository.save()
+        
+        repository.closeRepository()
+        repository.deleteRepository()
+    
+    }
+    
     func testEntitySpecificRepository(){
     
         Person.repository.openRepository()
@@ -57,22 +93,22 @@ class VHHCoreRepositoryTests: XCTestCase, CoreRepositoryDelegate {
     }
     
     func testbundel(){
-    
+        
         let modelName = "TestModel"
         
         let bundle = NSBundle(forClass: VHHCoreRepositoryTests.self)
         println("\(NSBundle.allBundles())")
         
-            for modelpath in bundle.pathsForResourcesOfType("momd", inDirectory: nil){
+        for modelpath in bundle.pathsForResourcesOfType("momd", inDirectory: nil){
+            
+            if let pathArray = NSURL.fileURLWithPath(modelpath as! String)?.pathComponents?.filter({ (name) -> Bool in
+                return name as! String == "\(modelName).momd"
+            }){
                 
-                if let pathArray = NSURL.fileURLWithPath(modelpath as! String)?.pathComponents?.filter({ (name) -> Bool in
-                    return name as! String == "\(modelName).momd"
-                }){
-                    
-                    let momdURL = NSURL.fileURLWithPath(modelpath as! String)
-                    println("\(bundle)")
-                }
+                let momdURL = NSURL.fileURLWithPath(modelpath as! String)
+                println("\(bundle)")
             }
+        }
         
     }
     

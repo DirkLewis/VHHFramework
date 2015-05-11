@@ -1,36 +1,16 @@
 //
 //  Person.swift
-//  
+//  TestApp
 //
-//  Created by Dirk Lewis on 5/4/15.
-//
+//  Created by Dirk Lewis on 5/11/15.
+//  Copyright (c) 2015 VHH. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
 @objc(Person)
-class Person: NSManagedObject, CoreRepositoryObjectProtocol{
-    
-    static let repository = TestRepository.createRepository()
-    
-    struct PersonAttributes {
-        var age: String
-        var fName: String
-        var lName: String
-        var entityIdentifier: String
-        
-    }
-    
-    struct PersonRelationships{
-        var person_address: String
-    }
-
-    @NSManaged var age: Int32
-    @NSManaged var fName: String
-    @NSManaged var lName: String
-    @NSManaged var person_address: Set<Address>
-    @NSManaged var entityIdentifier: String
+class Person: _Person,CoreRepositoryObjectProtocol {
     
     class func entityName() -> String {
         return "Person"
@@ -44,13 +24,8 @@ class Person: NSManagedObject, CoreRepositoryObjectProtocol{
         return super.objectID
     }
     
-//    class var repository: CoreRepositoryProtocol{
-//        return _repository
-//    }
-    
     var repository: CoreRepositoryProtocol{
-        return  Person.repository
+        return  _Person.repository
     }
-
+    
 }
-

@@ -9,13 +9,11 @@
 import Foundation
 import CoreData
 
-protocol CoreRepositoryObjectProtocol: AnyObject{
+protocol CoreRepositoryObjectProtocol: class{
 
     static func entityName() -> String
     func printDescription()-> String
     func objectId() -> NSManagedObjectID
     var entityIdentifier: String {get}
     
-    //static var repository: CoreRepositoryProtocol {get}
-    var repository: CoreRepositoryProtocol {get}
 }

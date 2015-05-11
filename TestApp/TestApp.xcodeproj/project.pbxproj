@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F33445371B00DCC200901B8A /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33445361B00DCC200901B8A /* Person.swift */; };
+		F33445391B00DD0A00901B8A /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33445381B00DD0A00901B8A /* Address.swift */; };
+		F334453C1B00E04400901B8A /* NSManagedObjectQueryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F334453B1B00E04400901B8A /* NSManagedObjectQueryExtension.swift */; };
+		F334453D1B00E04400901B8A /* NSManagedObjectQueryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F334453B1B00E04400901B8A /* NSManagedObjectQueryExtension.swift */; };
+		F334453F1B00EBF200901B8A /* NSManagedObjectQueryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F334453E1B00EBF200901B8A /* NSManagedObjectQueryProtocol.swift */; };
+		F33445401B00EBF200901B8A /* NSManagedObjectQueryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F334453E1B00EBF200901B8A /* NSManagedObjectQueryProtocol.swift */; };
 		F34C923B1AFA57A400FB01C2 /* TestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD46A1AFA4149004BBAD7 /* TestModel.xcdatamodeld */; };
 		F384E0CA1AF30A95009050FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E0C91AF30A95009050FD /* AppDelegate.swift */; };
 		F384E0CC1AF30A95009050FD /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E0CB1AF30A95009050FD /* MasterViewController.swift */; };
@@ -42,8 +48,8 @@
 		F384E1211AF30CDB009050FD /* VHHCoreRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E11F1AF30CDB009050FD /* VHHCoreRepositoryTests.swift */; };
 		F384E1221AF30CDB009050FD /* VHHStateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F384E1201AF30CDB009050FD /* VHHStateMachineTests.swift */; };
 		F3A6825A1AF8486500157339 /* ModelObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A682591AF8486500157339 /* ModelObjectTests.swift */; };
-		F3DDD46E1AFA4149004BBAD7 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD4671AFA4149004BBAD7 /* Address.swift */; };
-		F3DDD4701AFA4149004BBAD7 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD4691AFA4149004BBAD7 /* Person.swift */; };
+		F3DDD46E1AFA4149004BBAD7 /* _Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD4671AFA4149004BBAD7 /* _Address.swift */; };
+		F3DDD4701AFA4149004BBAD7 /* _Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD4691AFA4149004BBAD7 /* _Person.swift */; };
 		F3DDD4721AFA4149004BBAD7 /* TestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DDD46D1AFA4149004BBAD7 /* TestRepository.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +64,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F33445361B00DCC200901B8A /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		F33445381B00DD0A00901B8A /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		F334453B1B00E04400901B8A /* NSManagedObjectQueryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectQueryExtension.swift; sourceTree = "<group>"; };
+		F334453E1B00EBF200901B8A /* NSManagedObjectQueryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectQueryProtocol.swift; sourceTree = "<group>"; };
 		F384E0C41AF30A95009050FD /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F384E0C81AF30A95009050FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F384E0C91AF30A95009050FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,8 +94,8 @@
 		F384E11F1AF30CDB009050FD /* VHHCoreRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VHHCoreRepositoryTests.swift; sourceTree = "<group>"; };
 		F384E1201AF30CDB009050FD /* VHHStateMachineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VHHStateMachineTests.swift; sourceTree = "<group>"; };
 		F3A682591AF8486500157339 /* ModelObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelObjectTests.swift; path = TestAppTests/ModelObjectTests.swift; sourceTree = SOURCE_ROOT; };
-		F3DDD4671AFA4149004BBAD7 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		F3DDD4691AFA4149004BBAD7 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		F3DDD4671AFA4149004BBAD7 /* _Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Address.swift; sourceTree = "<group>"; };
+		F3DDD4691AFA4149004BBAD7 /* _Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Person.swift; sourceTree = "<group>"; };
 		F3DDD46B1AFA4149004BBAD7 /* TestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestModel.xcdatamodel; sourceTree = "<group>"; };
 		F3DDD46C1AFA4149004BBAD7 /* TestModel1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestModel1.xcdatamodel; sourceTree = "<group>"; };
 		F3DDD46D1AFA4149004BBAD7 /* TestRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRepository.swift; sourceTree = "<group>"; };
@@ -109,6 +119,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F334453A1B00E02A00901B8A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F334453B1B00E04400901B8A /* NSManagedObjectQueryExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		F384E0BB1AF30A95009050FD = {
 			isa = PBXGroup;
 			children = (
@@ -174,9 +192,9 @@
 		F384E0F01AF30C68009050FD /* VHHCoreRepository */ = {
 			isa = PBXGroup;
 			children = (
+				F334453A1B00E02A00901B8A /* Extensions */,
 				F384E0F11AF30C68009050FD /* Core */,
 				F384E0F51AF30C68009050FD /* Delegates */,
-				F384E0F81AF30C68009050FD /* Extensions */,
 				F384E0F91AF30C68009050FD /* Protocols */,
 			);
 			path = VHHCoreRepository;
@@ -201,19 +219,13 @@
 			path = Delegates;
 			sourceTree = "<group>";
 		};
-		F384E0F81AF30C68009050FD /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		F384E0F91AF30C68009050FD /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
 				F384E0FA1AF30C68009050FD /* BackingstoreProtocol.swift */,
 				F384E0FB1AF30C68009050FD /* CoreRepositoryObjectProtocol.swift */,
 				F384E0FC1AF30C68009050FD /* CoreRepositoryProtocol.swift */,
+				F334453E1B00EBF200901B8A /* NSManagedObjectQueryProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -266,7 +278,6 @@
 			isa = PBXGroup;
 			children = (
 				F3DDD4661AFA4149004BBAD7 /* Swift */,
-				F3DDD46A1AFA4149004BBAD7 /* TestModel.xcdatamodeld */,
 				F3DDD46D1AFA4149004BBAD7 /* TestRepository.swift */,
 			);
 			path = Model;
@@ -275,8 +286,11 @@
 		F3DDD4661AFA4149004BBAD7 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
-				F3DDD4671AFA4149004BBAD7 /* Address.swift */,
-				F3DDD4691AFA4149004BBAD7 /* Person.swift */,
+				F3DDD46A1AFA4149004BBAD7 /* TestModel.xcdatamodeld */,
+				F3DDD4671AFA4149004BBAD7 /* _Address.swift */,
+				F3DDD4691AFA4149004BBAD7 /* _Person.swift */,
+				F33445361B00DCC200901B8A /* Person.swift */,
+				F33445381B00DD0A00901B8A /* Address.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -383,10 +397,12 @@
 			files = (
 				F384E10F1AF30C68009050FD /* CoreRepositoryDelegate.swift in Sources */,
 				F384E0CE1AF30A95009050FD /* DetailViewController.swift in Sources */,
+				F334453F1B00EBF200901B8A /* NSManagedObjectQueryProtocol.swift in Sources */,
 				F384E1151AF30C68009050FD /* CoreRepositoryProtocol.swift in Sources */,
 				F384E11D1AF30C68009050FD /* StateMachine.swift in Sources */,
 				F384E0CC1AF30A95009050FD /* MasterViewController.swift in Sources */,
 				F384E1131AF30C68009050FD /* CoreRepositoryObjectProtocol.swift in Sources */,
+				F334453C1B00E04400901B8A /* NSManagedObjectQueryExtension.swift in Sources */,
 				F384E1071AF30C68009050FD /* CoreRepository.swift in Sources */,
 				F384E0CA1AF30A95009050FD /* AppDelegate.swift in Sources */,
 				F384E11B1AF30C68009050FD /* SMStatechange.swift in Sources */,
@@ -417,11 +433,15 @@
 				F3A6825A1AF8486500157339 /* ModelObjectTests.swift in Sources */,
 				F384E11A1AF30C68009050FD /* SMState.swift in Sources */,
 				F384E1121AF30C68009050FD /* BackingstoreProtocol.swift in Sources */,
-				F3DDD46E1AFA4149004BBAD7 /* Address.swift in Sources */,
+				F3DDD46E1AFA4149004BBAD7 /* _Address.swift in Sources */,
 				F384E10C1AF30C68009050FD /* SqliteBackingstore.swift in Sources */,
-				F3DDD4701AFA4149004BBAD7 /* Person.swift in Sources */,
+				F3DDD4701AFA4149004BBAD7 /* _Person.swift in Sources */,
 				F384E1181AF30C68009050FD /* SMEvent.swift in Sources */,
+				F33445401B00EBF200901B8A /* NSManagedObjectQueryProtocol.swift in Sources */,
+				F33445371B00DCC200901B8A /* Person.swift in Sources */,
+				F334453D1B00E04400901B8A /* NSManagedObjectQueryExtension.swift in Sources */,
 				F384E1101AF30C68009050FD /* CoreRepositoryDelegate.swift in Sources */,
+				F33445391B00DD0A00901B8A /* Address.swift in Sources */,
 				F384E10A1AF30C68009050FD /* CoreRepositoryFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -641,7 +661,8 @@
 				F3DDD46C1AFA4149004BBAD7 /* TestModel1.xcdatamodel */,
 			);
 			currentVersion = F3DDD46C1AFA4149004BBAD7 /* TestModel1.xcdatamodel */;
-			path = TestModel.xcdatamodeld;
+			name = TestModel.xcdatamodeld;
+			path = ../TestModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
